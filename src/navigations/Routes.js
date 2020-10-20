@@ -32,17 +32,17 @@ export const StackNavigation = () => (
     <Stack.Screen
       name="OfflineEntry"
       component={OfflineEntryScreen}
-      options={{ title: 'OfflineEntryScreen' }}
+      options={{ title: 'OfflineEntryScreen', headerShown: false }}
     />
     <Stack.Screen
       name="MyNotes"
       component={MyNotesScreen}
-      options={{ title: 'MyNotesScreen' }}
+      options={{ title: 'MyNotesScreen', headerShown: false }}
     />
     <Stack.Screen
       name="CreateNotes"
       component={CreateNotesScreen}
-      options={{ title: 'CreateNotesScreen' }}
+      options={{ title: 'CreateNotesScreen', headerShown: false }}
     />
   </Stack.Navigator>
 );
