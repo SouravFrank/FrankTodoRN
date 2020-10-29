@@ -3,12 +3,11 @@ import { StyleSheet, View, Image, TextInput } from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import Colors from '../constants/colors';
 
-export default offlineEntry = () => {
+export default offlineEntry = ({ navigation }) => {
   const [code, setCode] = useState(['', '', '', '']);
-  const k = 'pin'
+  // const k = 'pin';
   const PinInput = ({ pinIndex }) => {
-    // const
-    eval('const ' + k + pinIndex + '= ' + useRef(null));
+    // eval('const ' + k + pinIndex + '= ' + useRef(null));
     return (
       <TextInput
         style={{
@@ -17,7 +16,7 @@ export default offlineEntry = () => {
           width: 50,
           margin: 10,
         }}
-        ref={{ [`pin${pinIndex}`]: useRef(null) }}
+        // ref={{ [`pin${pinIndex}`]: useRef(null) }}
         keyboardType="numeric"
         textAlign="center"
         autoCompleteType="off"
@@ -37,15 +36,7 @@ export default offlineEntry = () => {
     const next = `pin${pinIndex + 1}`;
     // next.current.focus();
   };
-  var k = 'value'; 
-  var i = 0; 
-  for(i = 1; i < 5; i++) { 
-      eval('var ' + k + i + '= ' + i + ';'); 
-  } 
-  console.log("value1=" + value1); 
-  console.log("value2=" + value2); 
-  console.log("value3=" + value3); 
-  console.log("value4=" + value4);
+
   return (
     <View style={styles.container}>
       <View style={{ flex: 2, alignItems: 'center', justifyContent: 'center' }}>
@@ -56,13 +47,21 @@ export default offlineEntry = () => {
         style={{
           flex: 5,
           alignItems: 'center',
-          flexDirection: 'row',
+          flexDirection: 'column',
           justifyContent: 'space-around',
-        }}></View>
-      <View style={{ flexDirection: 'row' }}>
-        {code.map((item, index) => (
-          <PinInput pinIndex={index} />
-        ))}
+        }}>
+        <View style={{ flexDirection: 'row' }}>
+          {code.map((item, index) => (
+            <PinInput pinIndex={index} />
+          ))}
+        </View>
+        <View style={{ flex: 2 }}>
+          <Button
+            title="Unlock"
+            raised={true}
+            onPress={() => navigation.navigate('MyNotes')}
+          />
+        </View>
       </View>
     </View>
   );

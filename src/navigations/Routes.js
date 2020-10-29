@@ -5,9 +5,10 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import HomeScreen from '../screens/home';
 import LoginScreen from '../screens/login';
 import SignUpScreen from '../screens/signUp';
-import OfflineEntryScreen from '../screens/offlineEntry';
+import OfflineEntryScreen from '../screens/offlineEntry2';
 import MyNotesScreen from '../screens/myNotes';
 import CreateNotesScreen from '../screens/createNotes';
+import ViewDetailsScreen from '../screens/viewDetails';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -43,6 +44,12 @@ export const StackNavigation = () => (
       name="CreateNotes"
       component={CreateNotesScreen}
       options={{ title: 'CreateNotesScreen', headerShown: false }}
+    />
+    <Stack.Screen
+      name="ViewDetails"
+      component={ViewDetailsScreen}
+      options={{ title: 'ViewDetailsScreen', headerShown: false }}
+      initialParams={{ item: {} }}
     />
   </Stack.Navigator>
 );
