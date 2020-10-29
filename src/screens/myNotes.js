@@ -2,12 +2,12 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  Text,
   Image,
   FlatList,
   TouchableOpacity,
-  TouchableNativeFeedback
+  TouchableNativeFeedback,
 } from 'react-native';
+import { Text } from 'react-native-elements';
 
 // import { AddNoteButton } from '../components/AddNoteButton';
 import Colors from '../constants/colors';
@@ -47,10 +47,7 @@ export default MyNotesScreen = ({ navigation }) => {
   const AddNoteButton = ({ onPress }) => {
     return (
       <View style={styles.MainContainer}>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={onPress}
-          >
+        <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
           <Image
             source={{
               uri:

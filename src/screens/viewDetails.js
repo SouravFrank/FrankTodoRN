@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Text } from 'react-native-elements';
 
 import Colors from '../constants/colors';
 
 export default viewDetails = ({ navigation, route }) => {
   const { title, description } = route.params.item;
-  console.log("here I am");
+
   return (
     <View style={styles.container}>
       <View
