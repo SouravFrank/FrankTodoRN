@@ -2,14 +2,16 @@ import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
+//Screen imports
 import HomeScreen from '../screens/home';
 import LoginScreen from '../screens/login';
 import SignUpScreen from '../screens/signUp';
-import OfflineEntryScreen from '../screens/offlineEntry2';
+import OfflineEntryScreen from '../screens/offlineEntry';
 import MyNotesScreen from '../screens/myNotes';
 import CreateNotesScreen from '../screens/createNotes';
 import ViewDetailsScreen from '../screens/viewDetails';
 
+//Navigation Object
 const Stack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
