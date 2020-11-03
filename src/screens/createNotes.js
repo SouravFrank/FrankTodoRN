@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Image, SafeAreaView } from 'react-native';
 import { Text, Input, Button } from 'react-native-elements';
 import {
@@ -6,9 +6,23 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
+import { storeData, getData } from '../utils/asyncStorage';
 import Colors from '../constants/colors';
 
 export default create = ({ navigation }) => {
+  const [title, setTitle] = useState('');
+  const [desc, setDesc] = useState('');
+
+  const handleCreateNote = async () => {
+    const storedData = await getData('frank.savedNotes');
+    const newData = storedData
+      ? [...storedData, { title, desc }]
+      : [{ title, desc }];
+    await storeData('frank.savedNotes', newData);
+    console.log('storedData', storedData); //comment
+    navigation.navigate('MyNotes');
+  };
+
   return (
     <View style={styles.container}>
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -21,6 +35,8 @@ export default create = ({ navigation }) => {
           label="Title"
           placeholder="Enter Note Title"
           inputContainerStyle={{ width: wp('70%') }}
+          onChangeText={(value) => setTitle(value)}
+          value={title}
         />
         <Input
           label="Description"
@@ -28,15 +44,13 @@ export default create = ({ navigation }) => {
           inputContainerStyle={{ width: wp('70%') }}
           inputStyle={{ height: hp('17%') }}
           multiline={true}
+          onChangeText={(value) => setDesc(value)}
+          value={desc}
         />
       </View>
 
       <View style={{ flex: 1, width: wp('80%') }}>
-        <Button
-          title="Save"
-          raised={true}
-          onPress={() => navigation.navigate('MyNotes')}
-        />
+        <Button title="Save" raised={true} onPress={() => handleCreateNote()} />
       </View>
     </View>
   );

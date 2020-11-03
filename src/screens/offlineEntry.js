@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Image, Keyboard } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Image,
+  Keyboard,
+  ActivityIndicator,
+} from 'react-native';
 import { Button, Text } from 'react-native-elements';
 import {
   widthPercentageToDP as wp,
@@ -7,32 +13,61 @@ import {
 } from 'react-native-responsive-screen';
 
 import { PINInput } from '../components/PINInput';
-import { storeData, getData } from '../utils/asyncStorage';
+import { storeData, getData, removeValue } from '../utils/asyncStorage';
 import Colors from '../constants/colors';
+import { connect } from 'react-redux';
+import * as actions from '../redux/actions';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default offlineEntry = ({ navigation }) => {
+const offlineEntry = ({ navigation, isAuthenticated, onAuth }) => {
   const [code, setCode] = useState();
-  const [oldUser, setOldUser] = useState(false);
+  const [savedPIN, setSavedPIN] = useState(null);
+  const [isLoading, setisLoading] = useState(true);
 
   const pinCheck = async () => {
     const offlinePIN = await getData('offlinePIN');
-    offlinePIN && setOldUser(true);
+    setSavedPIN(offlinePIN);
   };
 
-  const updateInput = (value) =>{
-    setCode(value)
-    value.length===4 && Keyboard.dismiss()
-  }
+  const updateInput = (value) => {
+    setCode(value);
+    value.length === 4 && Keyboard.dismiss();
+  };
+
+  const savePIN = async () => {
+    await storeData('offlinePIN', code);
+    onAuth();
+  };
+
+  const verifyPIN = () => {
+    if (savedPIN === code) {
+      onAuth();
+    } else {
+      console.log('Error log in');
+    }
+  };
+
+  const cleanStorage = async () => {
+    await removeValue('offlinePIN');
+    await removeValue('frank.savedNotes');
+  };
 
   useEffect(() => {
     pinCheck();
-  }, []);
+    setisLoading(false);
+  }, [savedPIN]);
 
-  return (
+  isAuthenticated && navigation.navigate('MyNotes');
+
+  return isLoading ? (
+    <View style={styles.container}>
+      <ActivityIndicator size="large" color="#ca2019" />
+    </View>
+  ) : (
     <View style={styles.container}>
       <View style={{ flex: 2, alignItems: 'center', justifyContent: 'center' }}>
         <Image style={styles.image} source={require('../assets/AppIcon.png')} />
-        {oldUser ? (
+        {savedPIN ? (
           <Text h3>Unlock your Notes</Text>
         ) : (
           <Text h3>Set New PIN</Text>
@@ -48,12 +83,23 @@ export default offlineEntry = ({ navigation }) => {
         <View style={{ flex: 1, width: wp('40%') }}>
           <PINInput PIN={code} setPIN={updateInput} />
         </View>
-        <View style={{ flex: 1, width: wp('80%') }}>
+        <View style={{ flex: 2, width: wp('80%') }}>
           <Button
-            title={oldUser ? 'Unlock' : 'Save PIN'}
+            title={savedPIN ? 'Unlock' : 'Save PIN'}
             raised={true}
-            onPress={() => navigation.navigate('MyNotes')}
+            onPress={savedPIN ? () => verifyPIN() : () => savePIN()}
           />
+          <TouchableOpacity onPress={() => cleanStorage()}>
+            <Text
+              style={{
+                margin: 20,
+                alignSelf: 'stretch',
+                textAlign: 'center',
+                color: '#ca2019',
+              }}>
+              Clean Storage
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -77,3 +123,17 @@ const styles = StyleSheet.create({
     width: '80%',
   },
 });
+
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated ? true : false,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAuth: () => dispatch(actions.authUser()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(offlineEntry);
