@@ -1,46 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   StyleSheet,
   View,
   Image,
   FlatList,
   TouchableOpacity,
-  TouchableNativeFeedback,
 } from 'react-native';
 import { Text } from 'react-native-elements';
+import { connect } from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
 
-// import { AddNoteButton } from '../components/AddNoteButton';
+import * as ROUTE_CONSTANTS from '../navigations/navigationConstants';
+import * as actions from '../redux/actions';
+
 import Colors from '../constants/colors';
+import MyCard from '../components/MyCard';
 
 import dummyData from '../data/dummyData';
 
-export default MyNotesScreen = ({ navigation }) => {
+const MyNotesScreen = ({ navigation, savedNotes, onLoadMyNotes }) => {
+  const isFocused = useIsFocused();
+
   const renderItem = ({ item }) => {
     return (
-      <TouchableNativeFeedback
-        onPress={() =>
-          navigation.navigate('ViewDetails', {
+      <TouchableOpacity
+        onPress={() => {
+          console.log('clicked');
+          navigation.navigate(ROUTE_CONSTANTS.ROUTE_VIEW_NOTE, {
             item,
-          })
-        }>
-        <View
-          style={{
-            borderRadius: 5,
-            borderWidth: 1,
-            margin: 10,
-            elevation: 4,
-            justifyContent: 'space-between',
-            shadowOffset: 10,
-            shadowColor: '#55a',
-            alignItems: 'stretch',
-            flex: 1,
-          }}>
-          <View style={{ margin: 5, alignItems: 'stretch', flex: 1 }}>
-            <Text>{item.title}</Text>
-            <Text>{item.description}</Text>
-          </View>
-        </View>
-      </TouchableNativeFeedback>
+          });
+        }}>
+        <MyCard title={item.title} description={item.description} />
+      </TouchableOpacity>
     );
   };
 
@@ -60,16 +51,39 @@ export default MyNotesScreen = ({ navigation }) => {
     );
   };
 
+  useEffect(() => {
+    onLoadMyNotes();
+  }, [isFocused]);
+
   return (
     <View style={styles.container}>
-      <Text>My Tasks</Text>
-      <FlatList
-        data={dummyData}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.title}
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          margin: 40,
+        }}>
+        <Image
+          style={{ height: 40, width: 40, marginRight: 10 }}
+          source={require('../assets/AppIcon.png')}
+        />
+        <Text h3>It's my Notes!</Text>
+      </View>
+      <View style={{ marginBottom: 20 }}>
+        {savedNotes && savedNotes.length ? (
+          <FlatList
+            data={savedNotes}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.title}
+          />
+        ) : (
+          <Text style={{textAlign: "center", color: Colors.color2}}>No saved Notes. Create some new.</Text>
+        )}
+      </View>
+      <AddNoteButton
+        onPress={() => navigation.navigate(ROUTE_CONSTANTS.ROUTE_CREATE_NOTES)}
       />
-      <AddNoteButton onPress={() => navigation.navigate('CreateNotes')} />
-      {/* <AddNoteButton onPress={() => alert('hello called me?')} /> */}
     </View>
   );
 };
@@ -100,3 +114,18 @@ const styles = StyleSheet.create({
     height: 50,
   },
 });
+
+const mapStateToProps = (state) => {
+  return {
+    // isAuthenticated: state.auth.isAuthenticated ? true : false,
+    savedNotes: state.notes,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onLoadMyNotes: () => actions.loadMyNotes(dispatch),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyNotesScreen);

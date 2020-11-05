@@ -1,5 +1,10 @@
-import login from '../screens/login';
-import signUp from '../screens/signUp';
-
+export const ROUTE_HOME = 'HOME';
 export const ROUTE_SIGN_IN = 'SIGN_IN';
 export const ROUTE_SIGN_UP = 'SIGN_UP';
+export const ROUTE_SIGN_OUT = 'SIGN_OUT';
+export const ROUTE_OFFLINE_PIN_INPUT = 'OFFLINE_PIN_INPUT';
+export const ROUTE_MY_NOTES = 'MY_NOTES';
+export const ROUTE_CREATE_NOTES = 'CREATE_NOTES';
+export const ROUTE_VIEW_NOTE = 'VIEW_NOTE';
+export const ROUTE_MAIN_APP = 'MAIN_APP';
+export const ROUTE_AUTH = 'AUTH';

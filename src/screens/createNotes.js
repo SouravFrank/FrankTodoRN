@@ -7,20 +7,21 @@ import {
 } from 'react-native-responsive-screen';
 
 import { storeData, getData } from '../utils/asyncStorage';
+import * as ROUTE_CONSTANTS from '../navigations/navigationConstants';
 import Colors from '../constants/colors';
 
 export default create = ({ navigation }) => {
   const [title, setTitle] = useState('');
-  const [desc, setDesc] = useState('');
+  const [description, setDesc] = useState('');
 
   const handleCreateNote = async () => {
     const storedData = await getData('frank.savedNotes');
     const newData = storedData
-      ? [...storedData, { title, desc }]
-      : [{ title, desc }];
+      ? [...storedData, { title, description }]
+      : [{ title, description }];
     await storeData('frank.savedNotes', newData);
-    console.log('storedData', storedData); //comment
-    navigation.navigate('MyNotes');
+    // console.log('create', storedData); //comment
+    navigation.navigate(ROUTE_CONSTANTS.ROUTE_MY_NOTES);
   };
 
   return (
@@ -45,7 +46,7 @@ export default create = ({ navigation }) => {
           inputStyle={{ height: hp('17%') }}
           multiline={true}
           onChangeText={(value) => setDesc(value)}
-          value={desc}
+          value={description}
         />
       </View>
 
