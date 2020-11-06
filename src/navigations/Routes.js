@@ -6,6 +6,8 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import * as ROUTE_CONSTANTS from './navigationConstants';
 
+import CustomDrawer from './CustomDrawer';
+
 //Screen imports
 import {
   HomeScreen,
@@ -81,7 +83,9 @@ const TabsScreen = () => (
 );
 
 const DrawerScreen = () => (
-  <Drawer.Navigator initialRouteName="Home">
+  <Drawer.Navigator
+    initialRouteName={ROUTE_CONSTANTS.ROUTE_HOME}
+    drawerContent={(props) => <CustomDrawer {...props} />}>
     <Drawer.Screen name={ROUTE_CONSTANTS.ROUTE_HOME} component={TabsScreen} />
     <Drawer.Screen
       name={ROUTE_CONSTANTS.ROUTE_SIGN_OUT}

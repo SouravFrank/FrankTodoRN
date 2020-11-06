@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 
-export const PINInput = ({ PIN, setPIN }) => {
+export default PINInput = ({ PIN, setPIN }) => {
   return (
     <TextInput
       style={{

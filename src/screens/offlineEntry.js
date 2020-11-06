@@ -14,10 +14,10 @@ import {
 } from 'react-native-responsive-screen';
 import { connect } from 'react-redux';
 
-import { PINInput } from '../components/PINInput';
-import { storeData, getData, removeValue } from '../utils/asyncStorage';
 import * as actions from '../redux/actions';
+import { MyButton, PINInput } from '../components';
 import * as ROUTE_CONSTANTS from '../navigations/navigationConstants';
+import { storeData, getData, removeValue } from '../utils/asyncStorage';
 import Colors from '../constants/colors';
 
 const offlineEntry = ({ navigation, isAuthenticated, onAuth }) => {
@@ -62,7 +62,7 @@ const offlineEntry = ({ navigation, isAuthenticated, onAuth }) => {
 
   return isLoading ? (
     <View style={styles.container}>
-      <ActivityIndicator size="large" color="#ca2019" />
+      <ActivityIndicator size="large" color={Colors.primary} />
     </View>
   ) : (
     <View style={styles.container}>
@@ -85,11 +85,12 @@ const offlineEntry = ({ navigation, isAuthenticated, onAuth }) => {
           <PINInput PIN={code} setPIN={updateInput} />
         </View>
         <View style={{ flex: 2, width: wp('80%') }}>
-          <Button
+          <MyButton
             title={savedPIN ? 'Unlock' : 'Save PIN'}
-            raised={true}
+            mode="contained"
             onPress={savedPIN ? () => verifyPIN() : () => savePIN()}
           />
+
           <TouchableOpacity onPress={() => cleanStorage()}>
             <Text
               style={{
