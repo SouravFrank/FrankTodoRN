@@ -7,17 +7,18 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { Button, Text } from 'react-native-elements';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import { connect } from 'react-redux';
 
 import { PINInput } from '../components/PINInput';
 import { storeData, getData, removeValue } from '../utils/asyncStorage';
-import Colors from '../constants/colors';
-import { connect } from 'react-redux';
 import * as actions from '../redux/actions';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import * as ROUTE_CONSTANTS from '../navigations/navigationConstants';
+import Colors from '../constants/colors';
 
 const offlineEntry = ({ navigation, isAuthenticated, onAuth }) => {
   const [code, setCode] = useState();
@@ -57,7 +58,7 @@ const offlineEntry = ({ navigation, isAuthenticated, onAuth }) => {
     setisLoading(false);
   }, [savedPIN]);
 
-  isAuthenticated && navigation.navigate('MyNotes');
+  isAuthenticated && navigation.navigate(ROUTE_CONSTANTS.ROUTE_MY_NOTES);
 
   return isLoading ? (
     <View style={styles.container}>

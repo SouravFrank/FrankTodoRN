@@ -5,3 +5,9 @@ export const authUser = () => {
     type: actionTypes.AUTH_USER,
   };
 };
+
+export const removeAuthUser = () => {
+  return {
+    type: actionTypes.REMOVE_AUTH_USER,
+  };
+};

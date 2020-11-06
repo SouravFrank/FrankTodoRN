@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 import { Input, Text } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Field, reduxForm } from 'redux-form';
 
 import Colors from '../constants/colors';
 

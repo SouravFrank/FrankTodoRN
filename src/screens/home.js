@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 import { Button, Text } from 'react-native-elements';
+import { useIsFocused } from '@react-navigation/native';
+import { connect } from 'react-redux';
 
+import * as ROUTE_CONSTANTS from '../navigations/navigationConstants';
+import * as actions from '../redux/actions';
 import Colors from '../constants/colors';
 
-export default HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation, removeAuth }) => {
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    removeAuth();
+  }, [isFocused]);
+
   return (
     <View style={styles.container}>
       <View
@@ -17,12 +27,14 @@ export default HomeScreen = ({ navigation }) => {
           title="Use Offline"
           type="outline"
           raised={true}
-          onPress={() => navigation.navigate('OfflineEntry')}
+          onPress={() =>
+            navigation.navigate(ROUTE_CONSTANTS.ROUTE_OFFLINE_PIN_INPUT)
+          }
         />
         <Button
           title="Sign in"
           raised={true}
-          onPress={() => navigation.navigate('Login')}
+          onPress={() => navigation.navigate(ROUTE_CONSTANTS.ROUTE_SIGN_IN)}
         />
       </View>
       <View style={{ flex: 0.8 }}>
@@ -50,3 +62,11 @@ const styles = StyleSheet.create({
     width: 150,
   },
 });
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeAuth: () => dispatch(actions.removeAuthUser()),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(HomeScreen);
