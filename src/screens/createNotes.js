@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Image, SafeAreaView } from 'react-native';
-import { Text, Input, Button } from 'react-native-elements';
+import { StyleSheet, View } from 'react-native';
+import { Input } from 'react-native-elements';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -8,9 +8,10 @@ import {
 
 import { storeData, getData } from '../utils/asyncStorage';
 import * as ROUTE_CONSTANTS from '../navigations/navigationConstants';
+// import { MyButton } from '../components';
 import Colors from '../constants/colors';
 
-export default create = ({ navigation }) => {
+export default CreateNote = ({ navigation }) => {
   const [title, setTitle] = useState('');
   const [description, setDesc] = useState('');
 
@@ -20,29 +21,30 @@ export default create = ({ navigation }) => {
       ? [...storedData, { title, description }]
       : [{ title, description }];
     await storeData('frank.savedNotes', newData);
-    // console.log('create', storedData); //comment
     navigation.navigate(ROUTE_CONSTANTS.ROUTE_MY_NOTES);
   };
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Image style={styles.image} source={require('../assets/AppIcon.png')} />
-        <Text h4>Create New Note!</Text>
+      <View style={{ flex: 1 }}>
+        <PageHeader
+          title="Create your Note!"
+          leftIcon="backburger"
+          wave="wave2"
+          onPress={() => navigation.pop()}
+        />
       </View>
 
-      <View style={{ flex: 2, justifyContent: 'center', marginVertical: 50 }}>
+      <View style={styles.inputContainer}>
         <Input
           label="Title"
           placeholder="Enter Note Title"
-          inputContainerStyle={{ width: wp('70%') }}
           onChangeText={(value) => setTitle(value)}
           value={title}
         />
         <Input
           label="Description"
           placeholder="Enter Note Description"
-          inputContainerStyle={{ width: wp('70%') }}
           inputStyle={{ height: hp('17%') }}
           multiline={true}
           onChangeText={(value) => setDesc(value)}
@@ -50,8 +52,17 @@ export default create = ({ navigation }) => {
         />
       </View>
 
-      <View style={{ flex: 1, width: wp('80%') }}>
-        <Button title="Save" raised={true} onPress={() => handleCreateNote()} />
+      <View style={styles.buttonContainer}>
+        <MyButton
+          title="Save"
+          mode="contained"
+          onPress={() => handleCreateNote()}
+        />
+        <MyButton
+          title="Cancel"
+          mode="outlined"
+          onPress={() => navigation.pop()}
+        />
       </View>
     </View>
   );
@@ -60,16 +71,18 @@ export default create = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     backgroundColor: Colors.background,
   },
-  buttons: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '80%',
+  inputContainer: {
+    flex: 2.1,
+    marginTop: 20,
+    marginHorizontal: 10,
   },
-  image: {
-    height: 50,
-    width: 50,
+  buttonContainer: {
+    flex: 0.8,
+    width: '80%',
+    marginHorizontal: '10%',
+    alignItems: 'stretch',
+    justifyContent: 'space-around',
   },
 });

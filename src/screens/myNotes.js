@@ -1,11 +1,5 @@
 import React, { useEffect } from 'react';
-import {
-  StyleSheet,
-  View,
-  Image,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
+import { StyleSheet, View, FlatList, TouchableOpacity } from 'react-native';
 import { Text } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { useIsFocused } from '@react-navigation/native';
@@ -13,10 +7,10 @@ import { useIsFocused } from '@react-navigation/native';
 import * as ROUTE_CONSTANTS from '../navigations/navigationConstants';
 import * as actions from '../redux/actions';
 
+import { MyCard, PageHeader, AddNew, NothingSaved } from '../components';
 import Colors from '../constants/colors';
-import MyCard from '../components/MyCard';
 
-import dummyData from '../data/dummyData';
+// import dummyData from '../data/dummyData';
 
 const MyNotesScreen = ({ navigation, savedNotes, onLoadMyNotes }) => {
   const isFocused = useIsFocused();
@@ -35,42 +29,21 @@ const MyNotesScreen = ({ navigation, savedNotes, onLoadMyNotes }) => {
     );
   };
 
-  const AddNoteButton = ({ onPress }) => {
-    return (
-      <View style={styles.MainContainer}>
-        <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
-          <Image
-            source={{
-              uri:
-                'https://reactnativecode.com/wp-content/uploads/2017/11/Floating_Button.png',
-            }}
-            style={styles.FloatingButtonStyle}
-          />
-        </TouchableOpacity>
-      </View>
-    );
-  };
-
   useEffect(() => {
     onLoadMyNotes();
   }, [isFocused]);
 
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-          margin: 40,
-        }}>
-        <Image
-          style={{ height: 40, width: 40, marginRight: 10 }}
-          source={require('../assets/AppIcon.png')}
+      <View style={{ flex: 1 }}>
+        <PageHeader
+          title="My Notes!"
+          leftIcon="menu"
+          wave="wave1"
+          onPress={() => navigation.toggleDrawer()}
         />
-        <Text h3>It's my Notes!</Text>
       </View>
-      <View style={{ marginBottom: 20 }}>
+      <View style={{ flex: 2.9, marginBottom: 20 }}>
         {savedNotes && savedNotes.length ? (
           <FlatList
             data={savedNotes}
@@ -78,12 +51,16 @@ const MyNotesScreen = ({ navigation, savedNotes, onLoadMyNotes }) => {
             keyExtractor={(item) => item.title}
           />
         ) : (
-          <Text style={{textAlign: "center", color: Colors.color2}}>No saved Notes. Create some new.</Text>
+          <NothingSaved title="Notes" />
         )}
       </View>
-      <AddNoteButton
-        onPress={() => navigation.navigate(ROUTE_CONSTANTS.ROUTE_CREATE_NOTES)}
-      />
+      <View style={styles.MainContainer}>
+        <AddNew
+          onPress={() =>
+            navigation.navigate(ROUTE_CONSTANTS.ROUTE_CREATE_NOTES)
+          }
+        />
+      </View>
     </View>
   );
 };
@@ -107,11 +84,6 @@ const styles = StyleSheet.create({
     height: 50,
     right: 30,
     bottom: 30,
-  },
-  FloatingButtonStyle: {
-    resizeMode: 'contain',
-    width: 50,
-    height: 50,
   },
 });
 

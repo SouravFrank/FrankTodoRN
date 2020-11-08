@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
-import { Button, Text } from 'react-native-elements';
+import { Text } from 'react-native-elements';
 import { useIsFocused } from '@react-navigation/native';
 import { connect } from 'react-redux';
 
+import { MyButton, CreatedByFrank } from '../components';
 import * as ROUTE_CONSTANTS from '../navigations/navigationConstants';
 import * as actions from '../redux/actions';
 import Colors from '../constants/colors';
@@ -23,22 +24,21 @@ const HomeScreen = ({ navigation, removeAuth }) => {
         <Text h1>Let's Note!</Text>
       </View>
       <View style={styles.buttonContainer}>
-        <Button
+        <MyButton
           title="Use Offline"
-          type="outline"
-          raised={true}
+          mode="outlined"
           onPress={() =>
             navigation.navigate(ROUTE_CONSTANTS.ROUTE_OFFLINE_PIN_INPUT)
           }
         />
-        <Button
+        <MyButton
           title="Sign in"
-          raised={true}
+          mode="contained"
           onPress={() => navigation.navigate(ROUTE_CONSTANTS.ROUTE_SIGN_IN)}
         />
       </View>
       <View style={{ flex: 0.8 }}>
-        <Text>Created by Frank</Text>
+        <CreatedByFrank />
       </View>
     </View>
   );

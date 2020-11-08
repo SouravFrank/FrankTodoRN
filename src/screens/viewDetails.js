@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Button, Input } from 'react-native-elements';
+import { Input } from 'react-native-elements';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 
 import * as ROUTE_CONSTANTS from '../navigations/navigationConstants';
 import * as actions from '../redux/actions';
+import { MyButton } from '../components';
 import Colors from '../constants/colors';
 
 const ViewDetails = ({ navigation, route, onDeleteNote, onEditNote }) => {
@@ -28,18 +29,24 @@ const ViewDetails = ({ navigation, route, onDeleteNote, onEditNote }) => {
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: 2, justifyContent: 'center', marginVertical: 50 }}>
+      <View style={{ flex: 1 }}>
+        <PageHeader
+          title={title}
+          leftIcon="backburger"
+          wave="wave3"
+          onPress={() => navigation.pop()}
+        />
+      </View>
+      <View style={styles.inputContainer}>
         <Input
           label="Title"
           placeholder="Enter Note Title"
-          inputContainerStyle={{ width: wp('70%') }}
           onChangeText={(value) => setEditTitle(value)}
           value={editTitle}
         />
         <Input
           label="Description"
           placeholder="Enter Note Description"
-          inputContainerStyle={{ width: wp('70%') }}
           inputStyle={{ height: hp('17%') }}
           multiline={true}
           onChangeText={(value) => setEditDescription(value)}
@@ -47,13 +54,18 @@ const ViewDetails = ({ navigation, route, onDeleteNote, onEditNote }) => {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <Button
+        <MyButton
           title="Update"
-          type="outline"
+          mode="outlined"
           raised={true}
           onPress={() => handleUpdate()}
         />
-        <Button title="Delete" raised={true} onPress={() => handleDelete()} />
+        <MyButton
+          title="Delete"
+          raised={true}
+          mode="contained"
+          onPress={() => handleDelete()}
+        />
       </View>
     </View>
   );
@@ -62,16 +74,19 @@ const ViewDetails = ({ navigation, route, onDeleteNote, onEditNote }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: Colors.background,
   },
+  inputContainer: {
+    flex: 2.1,
+    marginTop: 20,
+    marginHorizontal: 10,
+  },
   buttonContainer: {
-    flexDirection: 'column',
-    justifyContent: 'space-around',
+    flex: 0.8,
     width: '80%',
-    flex: 1,
-    paddingVertical: 20,
+    marginHorizontal: '10%',
+    alignItems: 'stretch',
+    justifyContent: 'space-around',
   },
 });
 
