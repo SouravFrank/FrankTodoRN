@@ -9,15 +9,16 @@ import {
   Text,
   TouchableRipple,
   Switch,
+  Caption,
 } from 'react-native-paper';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CreatedByFrank from '../components/CreatedByFrank';
 import * as ROUTE_CONSTANTS from './navigationConstants';
+import { version } from '../../package.json';
 
 export default CustomDrawer = (props) => {
   const paperTheme = useTheme();
-
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
@@ -28,15 +29,10 @@ export default CustomDrawer = (props) => {
                 source={require('../assets/AppIcon.png')}
                 size={50}
               />
-              <View
-                style={{
-                  marginLeft: 15,
-                  flexDirection: 'column',
-                  alignContent: 'center',
-                  justifyContent: 'center',
-                }}>
+              <View style={styles.appName}>
                 <Title style={styles.title}>Let's Note</Title>
               </View>
+              <Caption>v {version}</Caption>
             </View>
           </View>
           <Drawer.Section style={styles.drawerSection}>
@@ -114,24 +110,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
     marginTop: 3,
   },
-  caption: {
-    fontSize: 14,
-    lineHeight: 14,
-  },
-  row: {
-    marginTop: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  section: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: 15,
-  },
-  paragraph: {
-    fontWeight: 'bold',
-    marginRight: 3,
-  },
   drawerSection: {
     marginTop: 15,
   },
@@ -145,5 +123,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 12,
     paddingHorizontal: 16,
+  },
+  appName: {
+    marginLeft: 15,
+    flexDirection: 'column',
+    alignContent: 'center',
+    justifyContent: 'center',
   },
 });

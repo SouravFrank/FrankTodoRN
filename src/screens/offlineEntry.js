@@ -6,7 +6,7 @@ import {
   Keyboard,
   ActivityIndicator,
 } from 'react-native';
-import { Button, Text } from 'react-native-elements';
+import { Text } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {
   widthPercentageToDP as wp,
