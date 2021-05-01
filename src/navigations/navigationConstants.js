@@ -7,6 +7,7 @@ export const ROUTE_MY_NOTES = 'MY_NOTES';
 export const ROUTE_MY_TASKS = 'MY_TASKS';
 export const ROUTE_MY_PROFILE = 'MY_PROFILE';
 export const ROUTE_CREATE_NOTES = 'CREATE_NOTES';
+export const ROUTE_CREATE_TASKS = 'CREATE_TASKS';
 export const ROUTE_VIEW_NOTE = 'VIEW_NOTE';
 export const ROUTE_VIEW_TASK = 'VIEW_TASK';
 export const ROUTE_MAIN_APP = 'MAIN_APP';

@@ -5,3 +5,6 @@ export { default as OfflineEntryScreen } from './OfflineEntry';
 export { default as MyNotesScreen } from './MyNotes';
 export { default as CreateNotesScreen } from './CreateNotes';
 export { default as ViewDetailsScreen } from './ViewDetails';
+export { default as MyTasksScreen } from './MyTasks';
+export { default as CreateTaskScreen } from './CreateTask';
+export { default as ViewTaskScreen } from './ViewTask';

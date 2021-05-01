@@ -11,7 +11,7 @@ import Colors from './constants/colors'
 const theme = {
   ...DefaultTheme,
   dark: false,
-  roundness: 2,
+  roundness: 8,
   colors: {
     ...DefaultTheme.colors,
     primary: Colors.primary,
