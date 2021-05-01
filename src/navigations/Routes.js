@@ -18,43 +18,70 @@ import {
   MyNotesScreen,
   CreateNotesScreen,
   ViewDetailsScreen,
+  MyTasksScreen,
+  CreateTaskScreen,
+  ViewTaskScreen,
 } from '../screens';
 
 //Navigation Object
 const AuthStack = createStackNavigator();
-const MainStack = createStackNavigator();
+const NoteStack = createStackNavigator();
+const TaskStack = createStackNavigator();
 const RootStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
 //Define Routes
-const MainStackNavigation = () => (
-  <MainStack.Navigator
+const NoteStackNavigation = () => (
+  <NoteStack.Navigator
     screenOptions={{
       headerShown: false,
       cardStyle: { backgroundColor: 'transparent' },
       gestureEnabled: true,
-      
     }}
     mode="modal">
-    <MainStack.Screen
+    <NoteStack.Screen
       name={ROUTE_CONSTANTS.ROUTE_MY_NOTES}
       component={MyNotesScreen}
     />
-    <MainStack.Screen
+    <NoteStack.Screen
       name={ROUTE_CONSTANTS.ROUTE_CREATE_NOTES}
       component={CreateNotesScreen}
     />
-    <MainStack.Screen
+    <NoteStack.Screen
       name={ROUTE_CONSTANTS.ROUTE_VIEW_NOTE}
       component={ViewDetailsScreen}
       initialParams={{ item: {} }}
     />
-  </MainStack.Navigator>
+  </NoteStack.Navigator>
+);
+
+const TaskStackNavigation = () => (
+  <TaskStack.Navigator
+    screenOptions={{
+      headerShown: false,
+      cardStyle: { backgroundColor: 'transparent' },
+      gestureEnabled: true,
+    }}
+    mode="modal">
+    <TaskStack.Screen
+      name={ROUTE_CONSTANTS.ROUTE_MY_TASKS}
+      component={MyTasksScreen}
+    />
+    <TaskStack.Screen
+      name={ROUTE_CONSTANTS.ROUTE_CREATE_TASKS}
+      component={CreateTaskScreen}
+    />
+    <TaskStack.Screen
+      name={ROUTE_CONSTANTS.ROUTE_VIEW_TASK}
+      component={ViewTaskScreen}
+      initialParams={{ item: {} }}
+    />
+  </TaskStack.Navigator>
 );
 
 const AuthStackNavigation = () => (
-  <AuthStack.Navigator initialRouteName="Home">
+  <AuthStack.Navigator>
     <AuthStack.Screen
       name={ROUTE_CONSTANTS.ROUTE_HOME}
       component={HomeScreen}
@@ -80,12 +107,16 @@ const AuthStackNavigation = () => (
 
 const TabsScreen = () => (
   <Tab.Navigator
+    initialRouteName={ROUTE_CONSTANTS.ROUTE_MY_TASKS}
     tabBarOptions={{
       activeTintColor: Colors.primary,
+      style: { height: 60 },
+      tabStyle: { marginVertical: 10 },
+      labelStyle: { fontSize: 16, marginTop: 10 },
     }}>
     <Tab.Screen
       name={ROUTE_CONSTANTS.ROUTE_MY_NOTES}
-      component={MainStackNavigation}
+      component={NoteStackNavigation}
       options={{
         tabBarLabel: 'My Notes',
         tabBarIcon: ({ color, size }) => (
@@ -95,7 +126,7 @@ const TabsScreen = () => (
     />
     <Tab.Screen
       name={ROUTE_CONSTANTS.ROUTE_MY_TASKS}
-      component={MainStackNavigation}
+      component={TaskStackNavigation}
       options={{
         tabBarLabel: 'My Tasks',
         tabBarIcon: ({ color, size }) => (
@@ -105,7 +136,7 @@ const TabsScreen = () => (
     />
     <Tab.Screen
       name={ROUTE_CONSTANTS.ROUTE_MY_PROFILE}
-      component={MainStackNavigation}
+      component={NoteStackNavigation}
       options={{
         tabBarLabel: 'My Profile',
         tabBarIcon: ({ color, size }) => (

@@ -3,11 +3,11 @@ import { TouchableOpacity, StyleSheet, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Colors from '../constants/colors';
 
-export default AddNew = ({ onPress }) => {
+export default AddNew = ({ onPress, customStyle }) => {
   return (
     <View>
       <TouchableOpacity
-        style={{
+        style={[{
           backgroundColor: Colors.primary,
           borderRadius: 100,
           alignItems: 'center',
@@ -15,7 +15,7 @@ export default AddNew = ({ onPress }) => {
           shadowColor: Colors.primary,
           shadowRadius: 5,
           elevation: 10
-        }}
+        }, {...customStyle}]}
         activeOpacity={0.5}
         onPress={onPress}>
         <Icon
