@@ -19,7 +19,7 @@ const MyNotesScreen = ({ navigation, savedNotes, onLoadMyNotes }) => {
     return (
       <TouchableOpacity
         onPress={() => {
-          console.log('clicked');
+          
           navigation.navigate(ROUTE_CONSTANTS.ROUTE_VIEW_NOTE, {
             item,
           });

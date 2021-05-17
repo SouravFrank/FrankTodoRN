@@ -253,11 +253,11 @@ export default CreateTask = ({ navigation }) => {
 
   const handleCreateReminder = async () => {
     const storedData = await getData('frank.savedTasks');
-    // const datePicked 
+    // const datePicked
     // const newData = storedData ? [...storedData, { title, description,  }] : [{ title, description }];
-console.log("Title", title, "desc", description, "date", dateInput, "done");
-const obj = {title, description, date: dateInput, done: false}
-console.log(obj);
+    console.log('Title', title, 'desc', description, 'date', dateInput, 'done');
+    const obj = { title, description, date: dateInput, done: false };
+    console.log(obj);
     // await storeData('frank.savedNotes', newData);
     navigation.navigate(ROUTE_CONSTANTS.ROUTE_MY_TASKS);
   };

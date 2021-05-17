@@ -34,14 +34,14 @@ const ViewTask = ({ navigation, route, onDeleteNote, onEditNote }) => {
           title={title}
           leftIcon="backburger"
           wave="wave3"
-          onPress={() => navigation.pop()}
+          onPress={navigation.pop}
         />
       </View>
       <View style={styles.inputContainer}>
         <Input
           label="Title"
           placeholder="Enter Note Title"
-          onChangeText={(value) => setEditTitle(value)}
+          onChangeText={setEditTitle}
           value={editTitle}
         />
         <Input
@@ -49,7 +49,7 @@ const ViewTask = ({ navigation, route, onDeleteNote, onEditNote }) => {
           placeholder="Enter Note Description"
           inputStyle={{ height: hp('17%') }}
           multiline={true}
-          onChangeText={(value) => setEditDescription(value)}
+          onChangeText={setEditDescription}
           value={editDescription}
         />
       </View>
@@ -58,13 +58,13 @@ const ViewTask = ({ navigation, route, onDeleteNote, onEditNote }) => {
           title="Update"
           mode="outlined"
           raised={true}
-          onPress={() => handleUpdate()}
+          onPress={handleUpdate}
         />
         <MyButton
           title="Delete"
           raised={true}
           mode="contained"
-          onPress={() => handleDelete()}
+          onPress={ handleDelete}
         />
       </View>
     </View>

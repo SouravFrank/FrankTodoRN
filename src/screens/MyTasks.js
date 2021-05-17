@@ -71,6 +71,19 @@ const MyTasksScreen = ({ navigation, savedNotes, onLoadMyNotes }) => {
     );
   };
 
+  const renderItem = ({ item }) => {
+    return (
+      <TouchableRipple
+        onPress={() => {
+          navigation.navigate(ROUTE_CONSTANTS.ROUTE_VIEW_NOTE, {
+            item,
+          });
+        }}>
+        <MyCard title={item.title} description={item.description} />
+      </TouchableRipple>
+    );
+  };
+
   const dayCheck = () => {
     const yesterday = moment().subtract(1, 'day');
     const tomorrow = moment().add(1, 'day');
@@ -202,7 +215,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     // isAuthenticated: state.auth.isAuthenticated ? true : false,
-    savedNotes: state.notes,
+    savedTasks: state.tasks,
   };
 };
 
